@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ app_name }} - {{ media_item.name }}</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔐 {{ app_name }}</h1>
+            <nav class="breadcrumb">
+                <a href="/">Inicio</a> / 
+                <a href="/categoria/{{ category_name }}">{{ category_name|title }}</a> / 
+                <span>{{ media_item.name }}</span>
+            </nav>
+        </header>
+
+        <main>
+            <section class="media-detail">
+                <div class="detail-header">
+                    <div class="detail-icon">
+                        {% if media_item.media_type.value == 'video' %}
+                            🎬
+                        {% elif media_item.media_type.value == 'audio' %}
+                            🎵
+                        {% elif media_item.media_type.value == 'document' %}
+                            📄
+                        {% else %}
+                            📁
+                        {% endif %}
+                    </div>
+                    <h2>{{ media_item.name }}</h2>
+                </div>
+
+                <div class="detail-content">
+                    <div class="info-section">
+                        <h3>📋 Información del archivo</h3>
+                        <table class="info-table">
+                            <tr>
+                                <td class="label">Nombre:</td>
+                                <td>{{ media_item.name }}</td>
+                            </tr>
+                            <tr>
+                                <td class="label">Tipo:</td>
+                                <td>{{ media_item.extension|upper }} - {{ media_item.media_type.value|title }}</td>
+                            </tr>
+                            <tr>
+                                <td class="label">Tamaño:</td>
+                                <td>
+                                    {% if media_item.file_size_gb >= 1 %}
+                                        {{ media_item.file_size_gb }} GB ({{ media_item.file_size_mb }} MB)
+                                    {% else %}
+                                        {{ media_item.file_size_mb }} MB
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="label">Fecha creación:</td>
+                                <td>{{ media_item.created_date.strftime('%d/%m/%Y %H:%M') }}</td>
+                            </tr>
+                            <tr>
+                                <td class="label">Última modificación:</td>
+                                <td>{{ media_item.modified_date.strftime('%d/%m/%Y %H:%M') }}</td>
+                            </tr>
+                            <tr>
+                                <td class="label">Ruta:</td>
+                                <td class="path">{{ media_item.file_path }}</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="info-section">
+                        <h3>🎯 Metadata adicional</h3>
+                        <div class="metadata-placeholder">
+                            <p>ℹ️ La extracción de metadata avanzada estará disponible en la Fase 2</p>
+                            <ul class="feature-list">
+                                <li>Integración con TMDb para películas y series</li>
+                                <li>Información de OpenLibrary para libros</li>
+                                <li>Tags ID3 para archivos de audio</li>
+                                <li>Portadas y thumbnails</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <a href="/categoria/{{ category_name }}" class="btn-back">← Volver al listado</a>
+        </footer>
+    </div>
+</body>
+</html>

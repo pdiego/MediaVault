@@ -1,0 +1,28 @@
+# MediaVault - Requirements
+# Python 3.14+
+
+# Web Framework
+fastapi==0.115.0
+uvicorn[standard]==0.32.0
+
+# Templates
+jinja2==3.1.4
+
+# File handling and metadata extraction
+python-multipart==0.0.12
+aiofiles==24.1.0
+
+# Media metadata extraction (future phase)
+# pymediainfo==6.1.0
+# mutagen==1.47.0
+# pypdf==5.1.0
+
+# Utilities
+python-dotenv==1.0.1
+pydantic==2.10.0
+pydantic-settings==2.6.0
+
+# Development (optional)
+pytest==8.3.0
+black==24.10.0
+ruff==0.7.0

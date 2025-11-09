@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ app_name }} - Inicio</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔐 {{ app_name }}</h1>
+            <p class="subtitle">Tu bóveda multimedia privada</p>
+        </header>
+
+        <main>
+            <section class="categories">
+                <h2>Selecciona una categoría</h2>
+                
+                {% if categories %}
+                    <div class="category-grid">
+                        {% for category in categories %}
+                            <a href="/categoria/{{ category.name }}" class="category-card">
+                                <div class="category-icon">
+                                    {% if category.name == 'peliculas' %}
+                                        🎬
+                                    {% elif category.name == 'series' %}
+                                        📺
+                                    {% elif category.name == 'libros' %}
+                                        📚
+                                    {% elif category.name == 'musica' %}
+                                        🎵
+                                    {% else %}
+                                        📁
+                                    {% endif %}
+                                </div>
+                                <h3>{{ category.display_name }}</h3>
+                                <p class="item-count">{{ category.item_count }} elementos</p>
+                            </a>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="empty-state">
+                        <p>⚠️ No se encontraron categorías</p>
+                        <p class="hint">Verifica la configuración de rutas en config.py</p>
+                    </div>
+                {% endif %}
+            </section>
+        </main>
+
+        <footer>
+            <p>{{ app_name }} v0.1.0 | Hecho con ❤️ y FastAPI</p>
+        </footer>
+    </div>
+</body>
+</html>

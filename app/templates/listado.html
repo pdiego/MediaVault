@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ app_name }} - {{ category.display_name }}</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔐 {{ app_name }}</h1>
+            <nav class="breadcrumb">
+                <a href="/">Inicio</a> / <span>{{ category.display_name }}</span>
+            </nav>
+        </header>
+
+        <main>
+            <section class="media-list">
+                <div class="section-header">
+                    <h2>{{ category.display_name }}</h2>
+                    <p class="count">{{ media_items|length }} elementos encontrados</p>
+                </div>
+                
+                {% if media_items %}
+                    <div class="media-grid">
+                        {% for item in media_items %}
+                            <a href="/detalle/{{ category.name }}/{{ item.file_path.name }}" class="media-card">
+                                <div class="media-icon">
+                                    {% if item.media_type.value == 'video' %}
+                                        🎬
+                                    {% elif item.media_type.value == 'audio' %}
+                                        🎵
+                                    {% elif item.media_type.value == 'document' %}
+                                        📄
+                                    {% else %}
+                                        📁
+                                    {% endif %}
+                                </div>
+                                <div class="media-info">
+                                    <h3>{{ item.name }}</h3>
+                                    <p class="media-meta">
+                                        <span class="file-size">
+                                            {% if item.file_size_gb >= 1 %}
+                                                {{ item.file_size_gb }} GB
+                                            {% else %}
+                                                {{ item.file_size_mb }} MB
+                                            {% endif %}
+                                        </span>
+                                        <span class="file-type">{{ item.extension }}</span>
+                                    </p>
+                                </div>
+                            </a>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="empty-state">
+                        <p>📭 No se encontraron archivos en esta categoría</p>
+                        <p class="hint">Añade archivos multimedia a la carpeta: {{ category.path }}</p>
+                    </div>
+                {% endif %}
+            </section>
+        </main>
+
+        <footer>
+            <a href="/" class="btn-back">← Volver al inicio</a>
+        </footer>
+    </div>
+</body>
+</html>
